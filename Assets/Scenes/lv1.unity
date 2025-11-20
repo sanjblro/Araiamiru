@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 1054418283}
   - component: {fileID: 1054418282}
   m_Layer: 0
-  m_Name: Screenshot_2025-11-20_205743-removebg-preview
+  m_Name: char
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -635,7 +635,7 @@ GameObject:
   - component: {fileID: 1801032745}
   - component: {fileID: 1801032744}
   m_Layer: 0
-  m_Name: Screenshot_2025-11-20_205002
+  m_Name: obticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
