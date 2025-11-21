@@ -2,11 +2,11 @@
 
 public class Move : MonoBehaviour
 {
-    public float moveSpeed = 5f;      // ความเร็วเดินคงที่
-    public float jumpForce = 10f;     // แรงกระโดด
-    public Transform groundCheck;     // จุดเช็คพื้น
+    public float moveSpeed = 5f;     
+    public float jumpForce = 10f;    
+    public Transform groundCheck;     
     public float groundCheckRadius = 0.1f;
-    public LayerMask groundLayer;     // เลเยอร์พื้น
+    public LayerMask groundLayer;     
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -25,6 +25,7 @@ public class Move : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            Debug.Log("Yo");
         }
     }
 
@@ -34,5 +35,6 @@ public class Move : MonoBehaviour
         rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
     }
 }
+
 
 
