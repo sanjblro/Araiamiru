@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,9 @@ public class FallMove : MonoBehaviour
 
     private Rigidbody2D rb;
     private Collider2D col;
+    public bool canMove = true;
+
+
 
     void Start()
     {
@@ -28,28 +32,32 @@ public class FallMove : MonoBehaviour
     }
 
     void Update()
-    {
-        // กระโดดเมื่ออยู่บนพื้น
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
+{
+    if (!canMove) return; // ❗ ห้ามเดินหรือกระโดดเมื่อเจอ Trigger
 
-        // Game Over ถ้าตกลงต่ำเกินไป
-        if (transform.position.y < fallDeathY)
-        {
-            GameOver();
-        }
+    if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
+
+    if (transform.position.y < fallDeathY)
+    {
+        GameOver();
+    }
+}
+
+
 
     void FixedUpdate()
     {
-        // เดินไปข้างหน้า
-        if (IsGroundAhead())
+        if (canMove && IsGroundAhead())
         {
             rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
         }
-        // ถ้าไม่มีพื้นข้างหน้า → ปล่อยให้ gravity ทำงาน ตกหลุมจริง
+        else if (!canMove)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y); // หยุดจริง ๆ
+        }
     }
 
     // ฟังก์ชันเช็คว่าอยู่บนพื้น
@@ -89,4 +97,6 @@ public class FallMove : MonoBehaviour
         Vector2 originFront = new Vector2(col.bounds.center.x + col.bounds.extents.x, col.bounds.min.y);
         Gizmos.DrawLine(originFront, originFront + Vector2.down * forwardCheckDistance);
     }
+
+
 }

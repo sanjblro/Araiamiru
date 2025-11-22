@@ -30,6 +30,10 @@ public class Next : MonoBehaviour
             Move moveScript = other.GetComponent<Move>();
             if (moveScript != null)
                 moveScript.canMove = false;
+
+            FallMove fallMove = other.GetComponent<FallMove>();
+            if (fallMove != null)
+                fallMove.canMove = false;
         }
     }
 

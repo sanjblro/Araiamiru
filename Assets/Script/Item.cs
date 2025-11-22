@@ -1,19 +1,28 @@
 ﻿using UnityEngine;
 
-public class FallingItem : MonoBehaviour
+public class FallItem : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    Rigidbody2D rb;
 
-    private void Awake()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void FixedUpdate()
+    void Start()
     {
-        // ล็อกทุกเฟรมไม่ให้เอียง/ไม่ให้มีแรงด้านข้าง
+        rb.gravityScale = 1f;           // เปิดให้ตกลง
+        rb.freezeRotation = true;       // ล็อกไม่ให้หมุน
+    }
+
+    void FixedUpdate()
+    {
+        // บังคับให้ตกลงเป็นเส้นตรง ไม่มีไหลด้านข้าง
         rb.velocity = new Vector2(0, rb.velocity.y);
+
+        // กันหลุดให้ชัวร์
         rb.angularVelocity = 0;
         rb.rotation = 0;
     }
 }
+
