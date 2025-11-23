@@ -7,7 +7,7 @@ using TMPro;
 public class Loading : MonoBehaviour
 {
     public Slider progressBar;             // Progress Bar
-    public static string nextSceneName = "Lv1"; // Scene ถัดไป
+    public static string nextSceneName = "lv4"; // Scene ถัดไป
     public float loadDuration = 3f;        // เวลาที่ Progress Bar จะโหลดเต็ม (วินาที)
 
     void Start()

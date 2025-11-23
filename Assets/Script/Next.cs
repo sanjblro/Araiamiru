@@ -4,29 +4,42 @@ using UnityEngine.UI;
 
 public class Next : MonoBehaviour
 {
-    [Header("UI Button")]
-    public GameObject nextLevelButton; // ปุ่ม Next Level (Drag จาก Canvas)
+    [Header("UI Indicator")]
+    public GameObject nextLevelButton; // ใช้แค่เป็นตัวโชว์ว่าพร้อมไปต่อ
 
     [Header("Scene to Load")]
-    public string sceneToLoad; // กำหนดชื่อ Scene ที่ต้องการโหลด
+    public string sceneToLoad;
+
+    bool canGoNext = false; // ใช้ตรวจว่าผ่าน Trigger แล้ว
 
     private void Start()
     {
         if (nextLevelButton != null)
-            nextLevelButton.SetActive(false); // ซ่อนปุ่มตอนเริ่ม
+            nextLevelButton.SetActive(false);
+    }
+
+    private void Update()
+    {
+        // ถ้าอยู่ในโซน + กด spacebar = ไปด่านต่อ
+        if (canGoNext && Input.GetKeyDown(KeyCode.Space))
+        {
+            GoToNextLevel();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("ชนกล่องผ่าน!");
+            Debug.Log("ชนจุดผ่านระดับ!");
 
-            // แสดงปุ่ม Next Level
+            // แสดงปุ่มเฉย ๆ เป็น UI indicator
             if (nextLevelButton != null)
                 nextLevelButton.SetActive(true);
 
-            // สั่งหยุด Player
+            canGoNext = true;
+
+            // หยุดตัวละคร
             Move moveScript = other.GetComponent<Move>();
             if (moveScript != null)
                 moveScript.canMove = false;
@@ -37,8 +50,7 @@ public class Next : MonoBehaviour
         }
     }
 
-    // ฟังก์ชันให้ปุ่มเรียกเพื่อไป Scene ที่กำหนด
-    public void GoToNextLevel()
+    void GoToNextLevel()
     {
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
@@ -46,7 +58,7 @@ public class Next : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Scene to load ยังไม่ได้ตั้งค่า!");
+            Debug.LogWarning("Scene to load ยังไม่ได้ตั้งชื่อ!");
         }
     }
 }

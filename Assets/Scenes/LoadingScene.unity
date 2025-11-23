@@ -804,7 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 579804022}
-  loadDuration: 3
+  loadDuration: 2
 --- !u!4 &1136476477
 Transform:
   m_ObjectHideFlags: 0
