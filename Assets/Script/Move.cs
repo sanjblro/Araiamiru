@@ -9,7 +9,7 @@ public class Move : MonoBehaviour
     public LayerMask groundLayer;
 
     [HideInInspector]
-    public bool canMove = true; // ตัวแปรควบคุมการเดิน
+    public bool canMove = true; // ตัวแปรควบคุมการเดินและกระโดด
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -17,15 +17,18 @@ public class Move : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation; // ล็อก rotation ไม่ให้ล้ม
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     void Update()
     {
-        // เช็คว่าตัวละครยืนบนพื้นหรือไม่
+        // ❗ ห้ามกระโดดเมื่ออยู่ในโหมดคุย
+        if (!canMove) return;
+
+        // เช็คพื้น
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // กระโดดตอนกด Space และต้องอยู่บนพื้น
+        // กระโดด
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -35,14 +38,13 @@ public class Move : MonoBehaviour
 
     void FixedUpdate()
     {
+        // เดิน/หยุดเดิน
         if (canMove)
         {
-            // เดินไปข้างหน้าความเร็วคงที่
             rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
         }
         else
         {
-            // หยุด Player
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
     }
